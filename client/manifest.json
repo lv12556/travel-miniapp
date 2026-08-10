@@ -1,0 +1,11 @@
+{
+  "name": "山野时光",
+  "appid": "",
+  "description": "目的地发现与预约小程序",
+  "versionName": "0.1.0",
+  "versionCode": 100,
+  "transformPx": false,
+  "app-plus": {},
+  "h5": { "title": "山野时光" },
+  "mp-weixin": { "appid": "", "setting": { "urlCheck": false }, "usingComponents": true }
+}

@@ -1,0 +1,20 @@
+{
+  "pages": [
+    { "path": "pages/home/index", "style": { "navigationStyle": "custom" } },
+    { "path": "pages/list/index", "style": { "navigationBarTitleText": "发现目的地" } },
+    { "path": "pages/detail/index", "style": { "navigationBarTitleText": "目的地详情" } },
+    { "path": "pages/booking/index", "style": { "navigationBarTitleText": "提交预约" } },
+    { "path": "pages/profile/index", "style": { "navigationBarTitleText": "我的" } }
+  ],
+  "tabBar": {
+    "color": "#7c8275",
+    "selectedColor": "#1e5a45",
+    "backgroundColor": "#ffffff",
+    "borderStyle": "white",
+    "list": [
+      { "pagePath": "pages/home/index", "text": "首页" },
+      { "pagePath": "pages/list/index", "text": "发现" },
+      { "pagePath": "pages/profile/index", "text": "我的" }
+    ]
+  }
+}
