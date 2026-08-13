@@ -1,0 +1,27 @@
+CREATE DATABASE IF NOT EXISTS travel_miniapp DEFAULT CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci;
+USE travel_miniapp;
+
+CREATE TABLE destinations (
+  id BIGINT UNSIGNED PRIMARY KEY AUTO_INCREMENT,
+  title VARCHAR(100) NOT NULL,
+  city VARCHAR(50) NOT NULL,
+  category VARCHAR(50) NOT NULL,
+  image VARCHAR(500) NOT NULL,
+  rating DECIMAL(2,1) NOT NULL DEFAULT 5.0,
+  price DECIMAL(10,2) NOT NULL,
+  duration VARCHAR(30) NOT NULL,
+  created_at DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP
+);
+
+CREATE TABLE bookings (
+  id BIGINT UNSIGNED PRIMARY KEY AUTO_INCREMENT,
+  destination_id BIGINT UNSIGNED NOT NULL,
+  contact_name VARCHAR(30) NOT NULL,
+  phone VARCHAR(20) NOT NULL,
+  travel_date DATE NOT NULL,
+  people TINYINT UNSIGNED NOT NULL,
+  note VARCHAR(200) NOT NULL DEFAULT '',
+  status ENUM('pending', 'confirmed', 'cancelled') NOT NULL DEFAULT 'pending',
+  created_at DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP,
+  CONSTRAINT fk_booking_destination FOREIGN KEY (destination_id) REFERENCES destinations(id)
+);
