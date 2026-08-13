@@ -1,0 +1,11 @@
+{
+  "name": "途能共享太阳能助力车",
+  "appid": "",
+  "description": "途能共享太阳能助力车预约与骑行服务",
+  "versionName": "0.1.0",
+  "versionCode": 100,
+  "transformPx": false,
+  "app-plus": {},
+  "h5": { "title": "途能共享太阳能助力车" },
+  "mp-weixin": { "appid": "", "setting": { "urlCheck": false }, "usingComponents": true }
+}
