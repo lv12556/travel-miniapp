@@ -11,7 +11,9 @@ const schema = z.object({
   DB_USER: z.string().min(1).default('root'),
   DB_PASSWORD: z.string().default(''),
   JWT_SECRET: z.string().min(32).default('development-only-secret-change-this-before-production'),
-  ALLOW_DEMO_LOGIN: z.enum(['true', 'false']).default('true').transform((value) => value === 'true'),
+  WECHAT_APPID: z.string().default(''),
+  WECHAT_APPSECRET: z.string().default(''),
+  ALLOW_DEMO_LOGIN: z.enum(['true', 'false']).default('false').transform((value) => value === 'true'),
   RENTAL_START_FEE_CENTS: z.coerce.number().int().min(0).default(100),
   RENTAL_FEE_PER_MINUTE_CENTS: z.coerce.number().int().min(0).default(30)
 })
@@ -22,3 +24,7 @@ if (!parsed.success) {
 }
 
 export const env = parsed.data
+
+if (env.NODE_ENV === 'production' && env.JWT_SECRET === 'development-only-secret-change-this-before-production') {
+  throw new Error('JWT_SECRET must be replaced before production startup')
+}

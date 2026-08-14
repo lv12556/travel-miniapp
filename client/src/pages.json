@@ -1,4 +1,10 @@
 {
+  "easycom": {
+    "autoscan": true,
+    "custom": {
+      "^wd-(.*)": "wot-design-uni/components/wd-$1/wd-$1.vue"
+    }
+  },
   "pages": [
     { "path": "pages/home/index", "style": { "navigationStyle": "custom" } },
     { "path": "pages/list/index", "style": { "navigationStyle": "custom" } },
@@ -8,16 +14,5 @@
   ],
   "globalStyle": {
     "navigationStyle": "custom"
-  },
-  "tabBar": {
-    "color": "#82b090",
-    "selectedColor": "#2aad6a",
-    "backgroundColor": "#ffffff",
-    "borderStyle": "white",
-    "list": [
-      { "pagePath": "pages/home/index", "text": "首页" },
-      { "pagePath": "pages/list/index", "text": "租车" },
-      { "pagePath": "pages/profile/index", "text": "我的" }
-    ]
   }
 }

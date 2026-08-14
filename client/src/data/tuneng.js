@@ -34,9 +34,18 @@ export const nearbySpots = [
 ]
 
 export const plans = [
-  { id: 'hour', name: '小时卡', price: '¥3', desc: '每小时' },
-  { id: 'day', name: '畅骑日卡', price: '¥12', desc: '24小时不限次', hot: true },
-  { id: 'month', name: '月度骑行卡', price: '¥98', desc: '30天安心骑' },
+  {
+    id: 'hour', name: '次卡', price: '¥2', unit: '/次', validity: '单次有效', badge: '新用户免费',
+    benefits: ['骑行30分钟内计费', '超时¥0.5/5分钟', '支持临时还车', '含保险保障']
+  },
+  {
+    id: 'day', name: '日卡', price: '¥9.9', unit: '/天', validity: '当日24时前有效', badge: '热门',
+    benefits: ['不限次数骑行', '单次最长2小时', '全城任意停车点', '含骑行意外险']
+  },
+  {
+    id: 'month', name: '月卡', price: '¥59', unit: '/月', validity: '30天内有效', badge: '最划算',
+    benefits: ['不限次数骑行', '单次最长4小时', '解锁VIP停车区', '碳积分×2倍', '含综合骑行险']
+  },
 ]
 
 export const mallItems = [

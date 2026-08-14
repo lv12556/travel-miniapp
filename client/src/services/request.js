@@ -16,3 +16,8 @@ export function request(options) {
     })
   })
 }
+
+export function setAccessToken(token) {
+  if (token) uni.setStorageSync('accessToken', token)
+  else uni.removeStorageSync('accessToken')
+}

@@ -15,3 +15,9 @@ dist/
 
 # Uni-app generated directories
 unpackage/
+
+# Browser profiles generated during local visual checks
+client/.edge-temp*/
+
+# Regenerable icon extraction source; shipped icons are in src/static/icons
+client/.iconfont-source/

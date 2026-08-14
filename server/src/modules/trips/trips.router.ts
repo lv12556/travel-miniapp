@@ -33,3 +33,15 @@ tripsRouter.get('/history', asyncHandler(async (req, res) => {
   const [count] = await query<(RowDataPacket & { total: number })[]>('SELECT COUNT(*) AS total FROM rental_orders WHERE user_id = ?', [req.auth!.userId])
   return ok(res, { items: rows, page: input.page, pageSize: input.pageSize, total: count.total })
 }))
+
+tripsRouter.get('/current', asyncHandler(async (req, res) => {
+  const [trip] = await query<TripRow[]>(`SELECT o.order_id, o.vehicle_id, v.bike_number, m.model_name, c.color_name, o.start_time, o.end_time, o.total_fee, o.status FROM rental_orders o JOIN vehicles v ON v.vehicle_id = o.vehicle_id JOIN vehicle_models m ON m.model_id = v.model_id JOIN colors c ON c.color_id = v.color_id WHERE o.user_id = ? AND o.status = 'ongoing' ORDER BY o.start_time DESC LIMIT 1`, [req.auth!.userId])
+  return ok(res, trip ?? null)
+}))
+
+tripsRouter.get('/:tripId', asyncHandler(async (req, res) => {
+  const [trip] = await query<TripRow[]>(`SELECT o.order_id, o.vehicle_id, v.bike_number, m.model_name, c.color_name, o.start_time, o.end_time, o.total_fee, o.status FROM rental_orders o JOIN vehicles v ON v.vehicle_id = o.vehicle_id JOIN vehicle_models m ON m.model_id = v.model_id JOIN colors c ON c.color_id = v.color_id WHERE o.order_id = ? AND o.user_id = ? LIMIT 1`, [req.params.tripId, req.auth!.userId])
+  if (!trip) throw new AppError(404, 'Trip not found')
+  const tracks = await query<RowDataPacket[]>('SELECT track_id, lat, lng, recorded_at FROM trip_tracks WHERE order_id = ? ORDER BY recorded_at ASC', [req.params.tripId])
+  return ok(res, { ...trip, tracks })
+}))
