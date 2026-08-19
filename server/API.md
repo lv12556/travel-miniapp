@@ -12,6 +12,26 @@ Authorization: Bearer <accessToken>
 { "code": 0, "message": "ok", "data": {} }
 ```
 
+## 管理员后台
+
+管理台使用独立的管理员 JWT，不能用小程序用户 Token 代替。首次管理员由服务端 `.env` 的 `ADMIN_BOOTSTRAP_USERNAME`、`ADMIN_BOOTSTRAP_PASSWORD` 在启动时创建，密码以 scrypt 哈希保存。
+
+| 方法 | 路径 | 说明 |
+| --- | --- | --- |
+| POST | `/auth/admin-login` | 管理员账号密码登录，返回 8 小时管理员 Token |
+| GET | `/auth/admin-me` | 查询当前管理员身份 |
+| GET | `/admin/dashboard` | 后台运营统计，包含 `orderTrend`、`vehicleStatus`、`stationAvailability` 图表数据 |
+| GET/PATCH | `/admin/users`、`/admin/users/:userId/status` | 用户搜索、详情字段和冻结/解冻 |
+| GET/PATCH | `/admin/merchants`、`/admin/merchants/:merchantId` | 商家列表、入驻状态审核和冻结/解冻 |
+| GET/POST | `/admin/admins` | `super_admin` 查看或创建管理员账号 |
+| PATCH | `/admin/admins/:adminId/status` | `super_admin` 启用或停用管理员账号 |
+| GET/PATCH | `/admin/vehicles`、`/admin/vehicles/:vehicleId` | 全量车辆查询、状态/电量调整 |
+| GET/POST/PATCH | `/admin/stations`、`/admin/stations/:stationId` | 全量停车点查询、新建和更新 |
+| GET/PATCH | `/admin/orders`、`/admin/orders/:source/:orderId/status` | 骑行和商城订单列表、详情状态操作 |
+| GET/PATCH | `/admin/products`、`/admin/products/:productId` | 全量商品查询和价格/上下架修改 |
+| GET/PATCH | `/admin/community/posts`、`/admin/community/posts/:postId/status` | 全量帖子查询和隐藏/恢复 |
+| GET/PATCH | `/admin/repairs`、`/admin/repairs/:ticketId` | 全量报修工单查询和状态处理 |
+
 ## 认证与用户
 
 | 方法 | 路径 | 请求体/参数 | 说明 |

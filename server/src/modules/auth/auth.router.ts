@@ -4,13 +4,24 @@ import { query } from '../../config/database.js'
 import { AppError } from '../../common/errors/app-error.js'
 import { created, ok } from '../../common/http/response.js'
 import { asyncHandler } from '../../common/utils/async-handler.js'
-import { createAccessToken, requireUser } from '../../common/middleware/auth.js'
-import { demoLoginSchema, wechatLoginSchema } from './auth.schemas.js'
+import { createAccessToken, createAdminAccessToken, requireAdmin, requireUser } from '../../common/middleware/auth.js'
+import { adminLoginSchema, demoLoginSchema, wechatLoginSchema } from './auth.schemas.js'
+import { verifyPassword } from '../admin/admin.service.js'
 import type { RowDataPacket } from 'mysql2'
 
 export const authRouter = Router()
 
 type UserRow = RowDataPacket & { user_id: number; openid: string; nickname: string | null; avatar: string | null; phone: string | null; member_level: string; points: number }
+type AdminRow = RowDataPacket & { admin_id: number; username: string; password_hash: string; role: 'super_admin' | 'editor'; status: number }
+
+authRouter.post('/admin-login', asyncHandler(async (req, res) => {
+  const input = adminLoginSchema.parse(req.body)
+  const [admin] = await query<AdminRow[]>('SELECT admin_id, username, password_hash, role, status FROM admins WHERE username = ? LIMIT 1', [input.username])
+  if (!admin || !admin.status || !(await verifyPassword(input.password, admin.password_hash))) throw new AppError(401, 'Invalid administrator credentials')
+  return ok(res, { accessToken: createAdminAccessToken({ adminId: admin.admin_id, openid: admin.username, role: admin.role }), admin: { adminId: admin.admin_id, username: admin.username, role: admin.role } }, 'Administrator login successful')
+}))
+
+authRouter.get('/admin-me', requireAdmin(), asyncHandler(async (req, res) => ok(res, { adminId: req.auth!.adminId, username: req.auth!.openid, role: req.auth!.role })))
 
 /**
  * Development login. In production, replace the supplied openid with the result

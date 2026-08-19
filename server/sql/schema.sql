@@ -88,9 +88,33 @@ CREATE TABLE IF NOT EXISTS trip_tracks (
 
 CREATE TABLE IF NOT EXISTS admins (
   admin_id BIGINT UNSIGNED NOT NULL AUTO_INCREMENT, username VARCHAR(50) NOT NULL,
-  password_hash VARCHAR(255) NOT NULL, role VARCHAR(20) NOT NULL DEFAULT 'editor',
+  password_hash VARCHAR(255) NOT NULL, role VARCHAR(20) NOT NULL DEFAULT 'editor', status TINYINT NOT NULL DEFAULT 1,
   created_at DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP, PRIMARY KEY(admin_id),
-  UNIQUE KEY uq_admins_username(username)
+  UNIQUE KEY uq_admins_username(username), KEY idx_admins_status(status)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+
+CREATE TABLE IF NOT EXISTS merchants (
+  merchant_id BIGINT UNSIGNED NOT NULL AUTO_INCREMENT,
+  name VARCHAR(120) NOT NULL, merchant_type VARCHAR(20) NOT NULL,
+  contact_name VARCHAR(50) NOT NULL, contact_phone VARCHAR(30) NOT NULL,
+  status VARCHAR(20) NOT NULL DEFAULT 'pending', cooperation_summary VARCHAR(1000),
+  created_at DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP, updated_at DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
+  PRIMARY KEY (merchant_id), UNIQUE KEY uq_merchants_name (name), KEY idx_merchants_status (status), KEY idx_merchants_created (created_at)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+
+INSERT INTO merchants (name, merchant_type, contact_name, contact_phone, status, cooperation_summary) VALUES
+('无锡绿色出行经销中心', 'dealer', '张经理', '13800002222', 'active', '负责无锡区域整车销售与售后'),
+('蠡湖生态景区', 'scenic', '王老师', '13900007654', 'pending', '申请部署 20 辆共享车辆'),
+('江南大学骑行服务中心', 'campus', '李老师', '15100009088', 'frozen', '校园停车点运营合作')
+ON DUPLICATE KEY UPDATE status=VALUES(status), cooperation_summary=VALUES(cooperation_summary);
+
+CREATE TABLE IF NOT EXISTS admin_action_logs (
+  log_id BIGINT UNSIGNED NOT NULL AUTO_INCREMENT,
+  admin_id BIGINT UNSIGNED NOT NULL, action VARCHAR(80) NOT NULL,
+  resource_type VARCHAR(40) NOT NULL, resource_id VARCHAR(80), detail_json JSON,
+  created_at DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP,
+  PRIMARY KEY (log_id), KEY idx_admin_logs_admin_time (admin_id, created_at),
+  CONSTRAINT fk_admin_logs_admin FOREIGN KEY (admin_id) REFERENCES admins(admin_id)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
 INSERT INTO vehicle_models(model_name, model_desc, base_price, battery_capacity, solar_panel)

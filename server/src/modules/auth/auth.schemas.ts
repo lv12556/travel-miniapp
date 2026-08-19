@@ -13,3 +13,8 @@ export const wechatLoginSchema = z.object({
   avatar: z.string().url().max(255).optional(),
   phone: z.string().regex(/^1\d{10}$/).optional()
 })
+
+export const adminLoginSchema = z.object({
+  username: z.string().trim().min(3).max(50),
+  password: z.string().min(10).max(128)
+})

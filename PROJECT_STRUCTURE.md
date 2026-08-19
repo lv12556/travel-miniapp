@@ -5,12 +5,36 @@
 ```text
 travel-miniapp/
 ├── client/                 uni-app + Vue 3 前端
+├── admin/                  Vue 3 + Vite 网页运营管理台（管理员登录和 RBAC）
 ├── server/                 Express + TypeScript 后端
 ├── README.md               项目总说明、启动方式和发布注意事项
 └── PROJECT_STRUCTURE.md    当前目录和代码职责说明
 ```
 
 `node_modules`、`client/dist`、`server/dist` 和浏览器检查缓存不属于源码。构建产物和缓存已清理，后续可通过 npm 命令重新生成。
+
+## Admin
+
+```text
+admin/
+├── src/
+│   ├── layouts/AdminLayout.vue    左侧导航、顶部栏和后台整体布局
+│   ├── router/index.js            登录、运营概览、用户、车辆、订单、商家、售后等路由
+│   ├── services/http.js           Axios 实例、Token 注入、统一错误处理
+│   ├── services/admin-api.js      复用 server /api/v1 的接口封装
+│   ├── stores/app.js              Pinia 全局界面和概览状态
+│   ├── views/DashboardPage.vue    4 个 KPI、订单趋势、车辆分布和待办入口
+│   ├── views/UsersPage.vue        用户搜索、详情、冻结/解冻和导出
+│   ├── views/MerchantsPage.vue    商家筛选、入驻审核、编辑和冻结/解冻
+│   ├── views/DataListPage.vue     车辆、停车点、订单、商品、社区、售后通用列表和分页操作
+│   ├── views/SettingsPage.vue     API、数据库和权限配置说明
+│   └── styles/main.css            保持现有绿色调的管理台样式
+├── .env.example                   统一后端 API 地址模板
+├── package.json                   Vue 3、Vite、Element Plus、Pinia、Axios 依赖
+└── README.md                      管理台说明、限制和启动方式
+```
+
+管理台不创建第二套数据库，`VITE_API_BASE_URL` 默认指向 `server` 的 `/api/v1`。管理员从 `server/.env` 的 bootstrap 配置首次创建，登录后使用独立 JWT；`/api/v1/admin/*` 由 `requireAdmin` 保护，普通小程序用户 Token 无法访问。后台与小程序始终读取同一套 MySQL 数据。
 
 ## Client
 
@@ -117,6 +141,7 @@ server/
 | `src/modules/engagement` | 社区、评论、点赞、收藏、报修和客服 |
 | `src/modules/notifications` | 通知列表、未读数量和已读状态 |
 | `src/modules/health` | 服务和数据库健康检查 |
+| `src/modules/admin` | 管理员账号初始化、scrypt 密码校验、RBAC 和全量管理接口 |
 | `sql/schema.sql` | 数据库建表、无锡演示车辆、停车点、商品和权益种子数据 |
 | `API.md` | API 方法、路径和请求说明 |
 

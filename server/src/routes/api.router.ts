@@ -10,6 +10,7 @@ import { commerceRouter } from '../modules/commerce/commerce.router.js'
 import { engagementRouter } from '../modules/engagement/engagement.router.js'
 import { notificationsRouter } from '../modules/notifications/notifications.router.js'
 import { benefitsRouter } from '../modules/benefits/benefits.router.js'
+import { adminRouter } from '../modules/admin/admin.router.js'
 
 export const apiRouter = Router()
 apiRouter.use('/health', healthRouter)
@@ -23,3 +24,4 @@ apiRouter.use('/commerce', commerceRouter)
 apiRouter.use('/community', engagementRouter)
 apiRouter.use('/notifications', notificationsRouter)
 apiRouter.use('/benefits', benefitsRouter)
+apiRouter.use('/admin', adminRouter)

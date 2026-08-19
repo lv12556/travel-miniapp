@@ -3,6 +3,8 @@ declare namespace Express {
     auth?: {
       userId: number
       openid: string
+      adminId?: number
+      role?: 'super_admin' | 'editor'
     }
   }
 }

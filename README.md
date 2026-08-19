@@ -38,7 +38,7 @@ T87D 是一个面向太阳能助力车销售、共享租车、社区运营和低
 - 扫码开锁目前是演示流程，尚未连接真实车锁设备。
 - 车辆锁状态、电量、定位和故障回传尚未接入设备平台。
 - 微信支付预支付、支付回调验签、退款和对账尚未完成。
-- 商品库存、SKU、售后和管理员后台尚未完成。
+- 管理后台已完成精简运营闭环：登录、数据看板、用户管理、车辆管理、订单管理、商家管理和售后工单；同时保留停车点、商品、社区和管理员账号等补充资源页。管理员登录、RBAC 和基础全量管理接口已完成。
 - 积分扣减、优惠券核销和兑换订单还需要生产级幂等与事务保护。
 - 微信订阅消息或生产消息推送尚未接入。
 - 数据库迁移、备份恢复、监控告警、日志审计、限流和自动化测试尚未完成。
@@ -67,6 +67,12 @@ travel-miniapp/
 │   ├── manifest.json               AppID 和平台配置
 │   ├── vite.config.js              Vite/uni-app 构建配置
 │   └── package.json                前端依赖和命令
+├── admin/                          网页运营管理台 Vue 3 + Vite + Element Plus
+│   ├── src/layouts/                后台框架、侧边导航和顶部栏
+│   ├── src/views/                  运营概览、车辆、订单、商品、社区、报修页面
+│   ├── src/services/               Axios 请求层，复用 server API
+│   ├── src/stores/                 Pinia 全局状态
+│   └── package.json                管理台依赖和命令
 ├── server/                         后端 Express + TypeScript
 │   ├── src/app.ts                  Express 应用、中间件、路由和错误处理
 │   ├── src/index.ts                后端启动入口
@@ -130,7 +136,18 @@ client/src/static/
 
 正式构建命令：npm run build:mp-weixin。不要手动修改 dist 目录。
 
-### 5.3 初始化数据库
+### 5.3 网页运营管理台
+
+```cmd
+cd /d C:\Users\Administrator\Documents\Codex\2026-08-17\new-chat\travel-miniapp\admin
+copy .env.example .env.development
+npm install
+npm run dev
+```
+
+默认地址为 http://localhost:5174。管理台和小程序必须配置为同一个 `VITE_API_BASE_URL`，从而共用 `server` 和 `tuneng_db`。
+
+### 5.4 初始化数据库
 
 确保 MySQL 8 已启动，然后执行：
 
@@ -138,7 +155,7 @@ client/src/static/
 
 脚本会创建 tuneng_db，写入 T87D 车型、颜色、无锡停车点、演示车辆、商品和优惠权益。重复执行前请确认是否需要保留业务数据。
 
-### 5.4 启动后端
+### 5.5 启动后端
 
     cd /d C:\Users\Administrator\Documents\Codex\2026-08-17\new-chat\travel-miniapp\server
     copy .env.example .env
@@ -147,7 +164,9 @@ client/src/static/
 
 健康检查地址：http://localhost:3000/api/v1/health。生产构建使用 npm run typecheck、npm run build，生产启动使用 npm start。
 
-### 5.5 配置前端 API 地址
+管理员首次配置：先执行 `server/sql/schema.sql`，再在 `server/.env` 设置 `ADMIN_BOOTSTRAP_USERNAME` 和至少 10 位的 `ADMIN_BOOTSTRAP_PASSWORD`。后端第一次启动时会自动创建 `super_admin`，管理台登录地址为 http://localhost:5174/login。创建成功后可从 `.env` 删除初始密码，管理员 Token 与小程序用户 Token 相互隔离。
+
+### 5.6 配置前端 API 地址
 
 在 client/.env.development 中设置：
 
@@ -192,6 +211,7 @@ server/.env 至少需要：
 | engagement | 社区、评论、点赞、收藏、报修、客服基础 |
 | notifications | 通知列表、未读数量、已读状态 |
 | health | 服务健康检查 |
+| admin | 管理员登录、全量车辆/停车点/订单/商品/社区/报修数据和后台写操作 |
 
 数据库脚本包含 users、vehicle_models、colors、vehicles、parking_zones、rental_orders、points_transactions、vehicle_location_history、trip_tracks、user_addresses、products、commerce_orders、commerce_order_items、order_payments、coupons、user_coupons、community_posts、community_comments、community_post_reactions、notifications、repair_tickets、support_messages 等表。
 
@@ -226,7 +246,7 @@ server/.env 至少需要：
 
 ### 9.3 商城、积分和支付
 
-1. 补充库存、SKU、订单状态机、售后和管理员操作接口。
+1. 补充库存、SKU、订单状态机、售后和更细的管理员运营接口。
 2. 服务端创建微信支付预支付订单，客户端不保存任何支付密钥。
 3. 实现支付回调验签、重复回调幂等、退款和订单同步。
 4. 积分兑换在事务中扣减积分并生成权益或兑换订单。
