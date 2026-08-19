@@ -48,6 +48,7 @@ T87D 是一个面向太阳能助力车销售、共享租车、社区运营和低
 
 ## 3. 项目结构
 
+```text
 travel-miniapp/
 ├── client/                         前端 uni-app + Vue 3
 │   ├── src/
@@ -80,9 +81,11 @@ travel-miniapp/
 ├── PROJECT_STRUCTURE.md            文件职责详细说明
 ├── README.md                       当前项目交接文档
 └── .gitignore                      Git 忽略规则
+```
 
 前端图片目录：
 
+```text
 client/src/static/
 ├── products/vehicles/              T87D 整车图和颜色卡片
 ├── products/accessories/           头盔、防水包、智能车锁、补能灯
@@ -92,6 +95,7 @@ client/src/static/
 ├── badges/                         骑行和碳积分徽章
 ├── metrics/                        里程、减碳、积分指标图
 └── profile/                        订单路线和个人中心图片
+```
 
 不要恢复旧的 static/bikes、static/accessories 目录，也不要手动修改 client/dist 或 server/dist，它们都是可以重新生成的构建产物。
 
