@@ -6,11 +6,7 @@
     }
   },
   "pages": [
-    { "path": "pages/home/index", "style": { "navigationStyle": "custom" } },
-    { "path": "pages/list/index", "style": { "navigationStyle": "custom" } },
-    { "path": "pages/detail/index", "style": { "navigationStyle": "custom" } },
-    { "path": "pages/booking/index", "style": { "navigationStyle": "custom" } },
-    { "path": "pages/profile/index", "style": { "navigationStyle": "custom" } }
+    { "path": "pages/home/index", "style": { "navigationStyle": "custom" } }
   ],
   "globalStyle": {
     "navigationStyle": "custom"

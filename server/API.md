@@ -29,7 +29,6 @@ Authorization: Bearer <accessToken>
 | GET | `/stations/:stationId` | - | 获取一个停车区及其可用车辆数。 |
 | GET | `/vehicles/nearby` | `lat`、`lng`，可选 `radius`、`limit` | 查询指定半径内可租车辆。 |
 | GET | `/vehicles/:vehicleId` | - | 获取车辆、车型和颜色信息。 |
-| GET | `/vehicles/models/:modelId/assets` | 可选 `colorId` | 查询车型图片、视频、文档资产。 |
 | POST | `/vehicles/:vehicleId/unlock` | - | 开锁并创建进行中的租赁订单。 |
 
 ## 骑行与积分
@@ -49,3 +48,31 @@ Authorization: Bearer <accessToken>
 - 订单状态为 `ongoing`、`completed`。
 - 费用单位为分，按 `.env` 中的 `RENTAL_START_FEE_CENTS` 与 `RENTAL_FEE_PER_MINUTE_CENTS` 计算。
 - 每次成功结束骑行，积分为 `max(10, floor(总费用 / 20))`。
+
+## 商城、社区、通知与售后
+
+除商品目录查询外，以下接口均需 Bearer token：
+
+| 方法 | 路径 | 说明 |
+| --- | --- | --- |
+| GET | `/commerce/products` | 分页查询整车、配件等商品 |
+| GET | `/commerce/products/:productId` | 商品详情 |
+| GET/POST | `/commerce/addresses` | 查询或新增收货地址 |
+| GET/POST | `/commerce/orders` | 查询订单或创建购买订单；积分扣减与订单写入同一事务 |
+| GET | `/commerce/orders/:orderId` | 订单详情及商品明细 |
+| POST | `/commerce/orders/:orderId/payments/wechat` | 创建微信支付待支付记录；配置商户参数后返回真实预支付参数 |
+| GET | `/community/posts` | 社区帖子分页列表 |
+| POST | `/community/posts` | 发布帖子 |
+| GET | `/community/posts/:postId` | 帖子详情及评论 |
+| POST | `/community/posts/:postId/comments` | 发表评论 |
+| POST | `/community/posts/:postId/reactions` | 切换点赞或收藏，`type` 为 `like` / `favorite` |
+| GET | `/community/favorites` | 当前用户收藏的帖子 |
+| GET/POST | `/community/repairs` | 报修记录或提交报修 |
+| GET | `/notifications` | 通知分页及未读数 |
+| GET | `/notifications/unread-count` | 首页红点使用的未读数量 |
+| PATCH | `/notifications/:notificationId/read` | 标记单条已读 |
+| PATCH | `/notifications/read-all` | 全部标记已读 |
+| GET | `/benefits` | 当前用户优惠券/权益 |
+| POST | `/benefits/claim` | 领取优惠券 |
+| POST | `/benefits/:userCouponId/use` | 核销可用权益 |
+| GET/POST | `/community/support/messages` | 智能客服消息历史与发送 |

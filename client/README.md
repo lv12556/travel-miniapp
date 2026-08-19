@@ -6,10 +6,10 @@
 
 ```text
 src/
-├── components/        可复用和主体验组件，TunengApp.vue 为 Figma 主体验
-├── data/              本地兜底数据与只读展示内容
-├── pages/             uni-app 页面路由
-├── services/          后端请求及车辆业务接口
+├── components/        主体验组件，TunengApp.vue 承载全部手机端页面与交互状态
+├── data/              本地只读展示内容与静态资源路径
+├── pages/             uni-app 页面路由（仅保留主入口）
+├── services/          登录与通用后端请求封装
 ├── static/            图片、车辆素材和其他静态资源
 ├── styles/            全局样式变量和基础样式
 ├── App.vue            应用生命周期
@@ -19,11 +19,9 @@ src/
 
 ## 页面约定
 
-- `pages/home/index.vue` 挂载完整的途能首页体验。
-- `pages/list/index.vue`、`pages/detail/index.vue`、`pages/booking/index.vue` 提供车辆浏览、详情和预约路由。
-- `pages/profile/index.vue` 保留为独立路由入口；首页内的个人中心包含完整二级页状态和详情流程。
-- `data/fallback.js` 是接口不可用时的车辆/站点兜底数据。
-- `data/tuneng.js` 是首页展示内容，避免把静态文案和图片路径堆在组件逻辑中。
+- `pages/home/index.vue` 仅负责挂载完整的途能应用体验。
+- `components/TunengApp.vue` 集中管理首页、租车、社区、商城、个人中心及各个手机端详情页。
+- `data/tuneng.js` 存放首页、商品、权益等静态展示数据，避免把文案和图片路径堆在组件逻辑中。
 
 ## 启动
 

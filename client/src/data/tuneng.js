@@ -1,17 +1,17 @@
 // Shared, read-only content used by the main Tuneng experience.
 // User interaction state remains inside TunengApp.vue.
 export const assets = {
-  bg: '/static/bikes/image-1.png',
-  banner1: '/static/bikes/image-2.png',
-  banner2: '/static/bikes/image-3.png',
-  banner3: '/static/bikes/image-4.png',
+  bg: '/static/banners/home-background.png',
+  banner1: '/static/banners/home-green-riding.png',
+  banner2: '/static/banners/home-points.png',
+  banner3: '/static/banners/home-first-ride.png',
 }
 
 export const products = [
-  { name: '热血红', edition: 'STEN', image: '/static/bikes/__Main_0004_Main_0000.png', accent: '#e8392a', tag: '热销', bg: '#fff0ef' },
-  { name: '极光粉', edition: 'Beauty', image: '/static/bikes/__Main_0000.png', accent: '#e8439a', tag: '新品', bg: '#fff0f7' },
-  { name: '星空蓝', edition: 'RACEFAST', image: '/static/bikes/_____Main_0000.png', accent: '#0aacbb', tag: '限量', bg: '#eafafb' },
-  { name: '皓月白', edition: 'RACEFAST', image: '/static/bikes/____Main_0000.png', accent: '#1a7a4a', tag: '经典', bg: '#eff8f1' },
+  { name: '热血红', edition: 'STEN', image: '/static/products/vehicles/t87d-red.png', accent: '#e8392a', tag: '热销', bg: '#fff0ef' },
+  { name: '极光粉', edition: 'Beauty', image: '/static/products/vehicles/t87d-pink.png', accent: '#e8439a', tag: '新品', bg: '#fff0f7' },
+  { name: '星空蓝', edition: 'RACEFAST', image: '/static/products/vehicles/t87d-blue.png', accent: '#0aacbb', tag: '限量', bg: '#eafafb' },
+  { name: '皓月白', edition: 'RACEFAST', image: '/static/products/vehicles/t87d-white.png', accent: '#1a7a4a', tag: '经典', bg: '#eff8f1' },
 ]
 
 export const banners = [
@@ -28,9 +28,9 @@ export const quickActions = [
 ]
 
 export const nearbySpots = [
-  { name: '夫子庙南广场', count: 5, dist: '120m' },
-  { name: '秦淮河停车点', count: 3, dist: '280m' },
-  { name: '中华门城堡', count: 8, dist: '450m' },
+  { name: '南禅寺牌楼', count: 5, dist: '120m' },
+  { name: '古运河停车点', count: 3, dist: '280m' },
+  { name: '清名桥', count: 8, dist: '450m' },
 ]
 
 export const plans = [
@@ -56,16 +56,16 @@ export const mallItems = [
 ]
 
 export const records = [
-  { date: '07月25日', time: '08:32', route: '夫子庙 → 新街口', km: '5.2', pts: '+52', carbon: '318g' },
-  { date: '07月24日', time: '17:48', route: '中华门 → 秦淮河', km: '3.8', pts: '+38', carbon: '233g' },
-  { date: '07月23日', time: '09:15', route: '夫子庙 → 雨花台', km: '7.1', pts: '+71', carbon: '435g' },
+  { date: '07月25日', time: '08:32', route: '南禅寺 → 崇安寺', km: '5.2', pts: '+52', carbon: '318g' },
+  { date: '07月24日', time: '17:48', route: '清名桥 → 古运河', km: '3.8', pts: '+38', carbon: '233g' },
+  { date: '07月23日', time: '09:15', route: '南禅寺 → 蠡湖公园', km: '7.1', pts: '+71', carbon: '435g' },
 ]
 
 export const badges = [
-  { icon: '♧', label: '绿色新芽', desc: '完成首次骑行', on: true },
-  { icon: '◉', label: '低碳启程', desc: '累计骑行10km', on: true },
-  { icon: '◈', label: '绿色骑士', desc: '减碳超过1kg', on: true },
-  { icon: 'ϟ', label: '低碳先锋', desc: '累计骑行100km' },
-  { icon: '✦', label: '碳能达人', desc: '等效植树5棵' },
-  { icon: '☀', label: '太阳能守护者', desc: '减碳超1吨' },
+  { image: '/static/badges/badge-sprout.png', label: '绿色萌芽', desc: '完成首次骑行', on: true },
+  { image: '/static/badges/badge-journey.png', label: '低碳启程', desc: '累计骑行10km', on: true },
+  { image: '/static/badges/badge-rider.png', label: '绿色骑士', desc: '减碳超过1kg', on: true },
+  { image: '/static/badges/badge-pioneer.png', label: '低碳先锋', desc: '累计骑行100km' },
+  { image: '/static/badges/badge-master.png', label: '碳能达人', desc: '等效植树5棵' },
+  { image: '/static/badges/badge-solar.png', label: '太阳能守护者', desc: '减碳超1吨' },
 ]
